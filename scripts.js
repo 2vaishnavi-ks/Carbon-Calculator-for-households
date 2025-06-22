@@ -28,6 +28,18 @@ function updateProgress() {
 
 // Step navigation
 function showStep(stepNumber) {
+     const currentStepElement = document.querySelector('.step.active');
+    const nextStepElement = document.getElementById(`step${stepNumber}`);
+    
+    if (currentStepElement && nextStepElement) {
+        currentStepElement.classList.remove('active');
+        setTimeout(() => {
+            nextStepElement.classList.add('active');
+            currentStep = stepNumber;
+            updateProgress();
+        }, 300);
+    }
+    
   // Hide all steps
   document.querySelectorAll('.step').forEach(step => step.style.display = 'none');
   // Show the requested step
