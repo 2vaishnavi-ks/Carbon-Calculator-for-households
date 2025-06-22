@@ -39,23 +39,9 @@ function showStep(stepNumber) {
             updateProgress();
         }, 300);
     }
-    
-  // Hide all steps
-  document.querySelectorAll('.step').forEach(step => step.style.display = 'none');
-  // Show the requested step
-  document.getElementById('step' + stepNumber).style.display = 'block';
 }
 
-// These are the functions to be called by your buttons
-function goToStep1() { showStep(1); }
-function goToStep2() { showStep(2); }
-function goToStep3() { showStep(3); }
-function goToStep4() { showStep(4); }
 
-// Optionally, on page load, show only step 1
-document.addEventListener('DOMContentLoaded', function() {
-  showStep(1);
-});
 
 // Input validation
 function validateInput(input) {
