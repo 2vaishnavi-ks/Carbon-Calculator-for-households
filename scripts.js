@@ -27,19 +27,23 @@ function updateProgress() {
 }
 
 // Step navigation
-function goToStep(stepNumber) {
-    const currentStepElement = document.querySelector('.step.active');
-    const nextStepElement = document.getElementById(`step${stepNumber}`);
-    
-    if (currentStepElement && nextStepElement) {
-        currentStepElement.classList.remove('active');
-        setTimeout(() => {
-            nextStepElement.classList.add('active');
-            currentStep = stepNumber;
-            updateProgress();
-        }, 300);
-    }
+function showStep(stepNumber) {
+  // Hide all steps
+  document.querySelectorAll('.step').forEach(step => step.style.display = 'none');
+  // Show the requested step
+  document.getElementById('step' + stepNumber).style.display = 'block';
 }
+
+// These are the functions to be called by your buttons
+function goToStep1() { showStep(1); }
+function goToStep2() { showStep(2); }
+function goToStep3() { showStep(3); }
+function goToStep4() { showStep(4); }
+
+// Optionally, on page load, show only step 1
+document.addEventListener('DOMContentLoaded', function() {
+  showStep(1);
+});
 
 // Input validation
 function validateInput(input) {
