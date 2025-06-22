@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Results</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    body {
+      font-family: 'Rubik', Arial, sans-serif;
+      background: linear-gradient(120deg, #e0ffe0 0%, #b2f0c0 100%);
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: left;
+    }
+    h2 {
+      color: #13411e;
+      margin-top: 40px;
+      font-size: 2em;
+      margin-left: 250px;
+      letter-spacing: 1px;
+    }
+    #result {
+      background: #fff;
+      color: #13411e;
+      padding: 20px 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(19,65,30,0.08);
+      font-size: 1.3em;
+      text-align: center;
+       max-width: 600px;
+       margin: 30px 150px 20px 150px;
+    }
+    .content-section {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start; /* align items to the left */
+      align-items: flex-start;
+      gap: 40px;
+      margin-left: 40px; /* add left margin if you want some space from the edge */
+    }
+    #chart {
+      background: #f8fff8;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(19,65,30,0.06);
+      padding: 20px;
+    }
+    svg {
+      
+      margin: 0 auto;
+    }
+    text {
+      font-size: 1.5em;
+      fill: #13411e;
+      font-weight: bold;
+    }
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInMoveUp 1s forwards;
+    }
+    @keyframes fadeInMoveUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    button, .text-wrapper-3 {
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    button:hover, .text-wrapper-3:hover {
+      transform: scale(1.08);
+      box-shadow: 0 4px 16px rgba(19,65,30,0.15);
+    }
+    .didyouknow-box {
+      background: #fcfcfc;
+      border-left: 8px solid #078045;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(19,65,30,0.07);
+      max-width: 800px;
+      padding: 24px 32px;
+      font-size: 1.2em;
+      color: #3b3b1a;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      position: absolute;
+      top: 50px;
+      right: 70px;
+      min-width: 600px;
+      margin: 0;
+    }
+    .didyouknow-title {
+      font-size: 1.3em;
+      font-weight: bold;
+      color: #325312;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .didyouknow-content {
+      font-size: 1em;
+      line-height: 1.2;
+    }
+  </style>
+</head>
+<body>
+  <h2 class="fade-in" style="font-style: italic;">Your Carbon Footprint Result</h2>
+  <div id="result" class="fade-in"></div>
+  <div class="content-section fade-in">
+    <div id="chart"></div>
+    <div class="tips-container">
+      <h3>Tips to Reduce Your Footprint</h3>
+      <div class="tipsBody"></div>
+    </div>
+  </div>
+  <div class="didyouknow-box fade-in">
+    <div class="didyouknow-title">💡 Did you know</div>
+    <div class="didyouknow-content" id="didYouKnowContent"></div>
+  </div>
+
+  <script>
+    // Get result from localStorage
+    const carbonKg = Number(localStorage.getItem('carbonResult'));
+    document.getElementById('result').textContent = carbonKg
+    ? `Your carbon footprint: ${carbonKg.toFixed(2)} kg CO₂e/month`
+    : "No result found. Please complete the calculation first.";
+
+    // Data for chart
+    const indiaAvg = 187;
+    const worldAvg = 820;
+    const data = [
+      {label: "Your Footprint", value: carbonKg},
+      {label: "India Avg", value: 187},
+      {label: "World Avg", value: 820}
+    ];
+
+
+    // Chart dimensions
+    const margin = {top: 30, right: 30, bottom: 60, left: 70},
+          width = 800 - margin.left - margin.right,
+          height = 500 - margin.top - margin.bottom;
+
+    // Create SVG
+    const svg = d3.select("#chart")
+      .append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .attr("transform", `translate(${margin.left},${margin.top})`);
+
+    // Y scale
+    const y = d3.scaleLinear()
+      .domain([0, d3.max(data, d => d.value) * 1.2])
+      .range([height, 0]);
+
+    // X scale
+    const x = d3.scaleBand()
+      .domain(data.map(d => d.label))
+      .range([0, width])
+      .padding(0.4);
+
+    // Y axis
+    svg.append("g")
+      .call(d3.axisLeft(y));
+
+    // X axis
+    svg.append("g")
+      .attr("transform", `translate(0,${height})`)
+      .call(d3.axisBottom(x));
+
+    // Y axis label
+    svg.append("text")
+      .attr("text-anchor", "middle")
+      .attr("transform", `translate(${-45},${height/2})rotate(-90)`)
+      .style("font-size", "1em")
+      .text("CO₂e (kg/month)");
+
+    // X axis label
+    svg.append("text")
+      .attr("text-anchor", "middle")
+      .attr("x", width/2)
+      .attr("y", height + 45)
+      .style("font-size", "1em")
+      .text("Category");
+
+    // Bars with animation
+    svg.selectAll("rect")
+      .data(data)
+      .enter()
+      .append("rect")
+      .attr("x", d => x(d.label))
+      .attr("y", y(0))
+      .attr("width", x.bandwidth())
+      .attr("height", 0)
+      .attr("fill", (d, i) => i === 0 ? "orange" : "steelblue")
+      .transition()
+      .duration(1200)
+      .attr("y", d => y(d.value))
+      .attr("height", d => height - y(d.value));
+
+    // Bar values
+    svg.selectAll("text.bar")
+      .data(data)
+      .enter()
+      .append("text")
+      .attr("class", "bar")
+      .attr("x", d => x(d.label) + x.bandwidth()/2)
+      .attr("y", d => y(d.value) - 8)
+      .attr("text-anchor", "middle")
+      .style("font-size", "1em")
+      .text(d => d.value);
+
+    // did u know part 
+    // Calculate annual carbon from monthly
+    const annualCarbon = carbonKg * 12;
+    const treesNeeded = Math.ceil(annualCarbon / 22);
+    const worldAverage = 820 * 12; // 9840 kg/year
+
+    let compareText = '';
+    if (annualCarbon > worldAverage) {
+      compareText = `Your footprint is <b>above</b> the global average of <b>${worldAverage.toLocaleString()} kg CO₂/year</b>. 
+      🇮🇳 In India, this level of emission is typically seen in urban upper-middle-class households with high energy and vehicle usage.`;
+    } else if (annualCarbon > 0.8 * worldAverage) {
+      compareText = `You're <b>close to</b> the global average of <b>${worldAverage.toLocaleString()} kg CO₂/year</b>. 
+      🌆 This is common among Indian households using ACs frequently, relying on personal vehicles, and consuming meat regularly.`;
+    } else {
+      compareText = `Good news! 🎉 Your footprint is <b>below</b> the global average of <b>${worldAverage.toLocaleString()} kg CO₂/year</b>. 
+      🌿 You're aligned with India's low-carbon lifestyle — keep it up!`;
+    }
+
+    document.getElementById('didYouKnowContent').innerHTML = `
+    <p>💨 You emit around <b>${carbonKg.toLocaleString()} kg CO₂ per month</b> 
+    — that’s <b>${annualCarbon.toLocaleString()} kg CO₂ per year</b>.</p>
+
+    <p>🌳 To absorb that, it would take around <b>${treesNeeded} mature trees</b> growing for an entire year.</p>
+
+    <p>${compareText}</p>
+
+    <hr>
+
+    <p style="margin-top: 10px;"><i>Reducing even a small portion of this — through shared transport, efficient energy use, or a diet shift — can ripple out to real-world climate gains.</i></p>
+  `;
+
+    
+    // --- Dynamic Tips Section ---
+    
+    document.querySelector('.tipsBody').innerHTML = generateTips(carbonKg);
+
+    // Function to generate tips based on user's carbon footprint
+    function generateTips(footprint) {
+      // Example thresholds (adjust as needed)
+      if (!footprint || isNaN(footprint)) {
+        return `<div style="color:#b00; text-align:center">No personalized tips available. Please complete the calculator first.</div>`;
+      }
+
+      let tips = [];
+        // High footprint (> 167 kg/month)
+        if (footprint > (2000 / 12)) {
+          tips.push({
+            head: "🚗 Transportation",
+            text: "Urban: Use metro, BMTC/RTC buses, or carpooling instead of daily solo drives. <br>Rural: Use shared autos, bicycles, or walk for nearby errands instead of two-wheelers."
+          });
+          tips.push({
+            head: "🍛 Diet",
+            text: "Urban: Reduce meat and packaged foods. Add 2–3 vegetarian days per week.<br>Rural: Continue traditional low-meat diets. Limit meat during festivals or weekends."
+          });
+          tips.push({
+            head: "💡 Electricity Use",
+            text: "Urban: Limit AC and geyser use. Switch to LED lighting and unplug idle devices.<br>Rural: Use solar lamps or solar water heaters. Avoid unnecessary fan or TV usage during the day."
+          });
+          } 
+
+        // Medium footprint (67–167 kg/month)
+        else if (footprint > (800 / 12)) {
+          tips.push({
+            head: "🔌 Energy Efficiency",
+            text: "Urban: Use 5-star appliances, run washing machines only when full, and avoid elevator for 1–2 floors.<br>Rural: Use energy-efficient fans and bulbs. Avoid electric room heaters."
+          });
+          tips.push({
+            head: "🚌 Smarter Travel",
+            text: "Urban: Combine errands, walk short distances, and use public transport weekly.<br>Rural: Carpool or share rides when visiting town or market areas."
+          });
+          tips.push({
+            head: "🥦 Smarter Food Choices",
+            text: "Urban: Shop from local markets. Avoid imported or processed food items.<br>Rural: Stick to home-grown or seasonal local foods. Minimize waste of cooked meals."
+          });
+        }
+
+        // Low footprint (≤ 67 kg/month)
+        else {
+          tips.push({
+            head: "🎉 Keep Going!",
+            text: "Urban: Great job! Keep minimizing your use of vehicles and avoid over-reliance on gadgets.<br>Rural: Your lifestyle is naturally climate-friendly. Maintain these habits!"
+          });
+          tips.push({
+            head: "☀️ Renewable Energy",
+            text: "Urban: Consider rooftop solar panels if possible (government subsidies available).<br>Rural: Opt for solar lighting and heaters. Reach out to your electricity board for schemes."
+          });
+          tips.push({
+            head: "🛍️ Sustainable Habits",
+            text: "Urban: Carry cloth bags, reduce home delivery packaging, and recycle e-waste.<br>Rural: Reuse plastic containers, minimize single-use items, and store rainwater if possible."
+          });
+        }
+
+        // Convert to HTML
+        return tips.map(tip => `
+          <div class="paraHead">${tip.head}</div>
+          <ul><li>${tip.text}</li></ul>
+        `).join('');
+      }
+
+    localStorage.removeItem('carbonResult');
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1" />-->
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="globals.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="scripts.js"></script>
+    <style>
+body {
+  font-family: 'Rubik', Arial, sans-serif;
+  background: linear-gradient(120deg, #e0ffe0 0%, #b2f0c0 100%);
+  margin: 0;
+  padding: 0;
+}
+section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.desktop {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 6px 32px rgba(19,65,30,0.10);
+  padding: 40px 36px 36px 36px;
+  max-width: 1500px;
+  margin: 40px auto;
+  width: 100%;
+  animation: fadeInMoveUp 1s;
+}
+@keyframes fadeInMoveUp {
+  from { opacity: 0; transform: translateY(30px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+.overlap, .overlap-group {
+  padding: 24px;
+  background: #219191; /* or your teal color */
+  border-radius: 12px;
+  margin-bottom: 32px;
+  box-sizing: border-box;
+}
+.overlap:last-child, .overlap-group:last-child {
+  border-bottom: none;
+}
+.text-wrapper, .text-wrapper-2, .text-wrapper-3, .text-wrapper-4 {
+  font-weight: 700;
+  color: #13411e;
+  margin-bottom: 12px;
+  font-size: 1.25em;
+  letter-spacing: 0.5px;
+}
+.text-wrapper-2 {
+  font-size: 1.35em;
+  margin-top: 18px;
+}
+.text-wrapper-3 {
+  font-size: 1.1em;
+  color: #fff;
+  background: #13411e;
+  padding: 8px 22px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.2s;
+  display: inline-block;
+}
+
+.text-wrapper-4 {
+  font-size: 1.18em;
+  margin-top: 30px;
+}
+.annual-share-of, .co-emissions-per, .annual-co-emissions {
+  display: block;
+  max-width: 100%;
+  margin: 18px auto 24px auto;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(19,65,30,0.07);
+}
+.annual-share-of { max-width: 600px; }
+.co-emissions-per { max-width: 500px; }
+.annual-co-emissions { max-width: 700px; }
+p, .annual-emissions, .these-figures-are, .looking-at-a-country, .p {
+  color: #2b4d2b;
+  font-size: 1.08em;
+  line-height: 1.7;
+  margin-bottom: 18px;
+}
+.div-wrapper {
+  margin-top: 24px;
+  text-align: right;
+}
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 18px auto;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(19,65,30,0.07);
+}
+@media (max-width: 700px) {
+  .desktop {
+    padding: 18px 4vw;
+  }
+  .annual-share-of, .co-emissions-per, .annual-co-emissions {
+    max-width: 98vw;
+  }
+}
+    </style>
+
+  </head>
+  <body>
+    <section>
+    <div class="desktop">
+      <div class="div">
+        <div class="overlap">
+          <p class="text-wrapper">India: What share of global CO2 emissions are emitted by the country?</p>
+          <img src="img/annual-share-of-co2-emissions.png" alt="Description" class="annual-share-of" />
+          <p class="looking-at-a-country">
+            Looking at a country’s annual emissions is useful, but it can be hard to put these numbers in context of the
+            global total. Is 10 million tonnes of CO2 large or small; what about 100 million; or 1 billion tonnes?<br />This
+            interactive chart shows annual emissions as a percentage of the global total in a given year.
+          </p>
+        </div>
+        <div class="overlap-group">
+          <div class="text-wrapper-2">India: CO2 Country Profile</div>
+          <p class="annual-emissions">
+            Annual emissions figures are often used to compare countries’ contribution to climate change. But this
+            metric often reflects differences in population size across the world.<br />These figures look specifically
+            at CO2 emissions – not total greenhouse gas emissions. You find total, and other greenhouse gas emissions,
+            later in this country profile.<br />Annual emissions can be largely influenced by population size – we
+            present the per capita figures above.
+          </p>
+          <p class="p">Per capita: how much CO2 does the average person emit?</p>
+          <img class="co-emissions-per" src="img/co-emissions-per-capita.png" />
+          <div class="div-wrapper"><div><a href="index.html" class="text-wrapper-3">Home</a></div></div>
+        </div>
+        <img class="annual-co-emissions" src="img/annual-co2-emissions-per-country.png" />
+        <div class="text-wrapper-4">What are the country’s annual CO2 emissions?</div>
+        <p class="these-figures-are">
+          These figures are based on ‘production’ or ‘territorial’ emissions (i.e. emissions from the burning of fossil
+          fuels, or cement production within a country’s borders). It does not consider the emissions of traded goods
+          (consumption-based emissions). You find consumption-based emissions later in this country profile.<br />These
+          figures look specifically at CO2 emissions – not total greenhouse gas emissions. You find total, and other
+          greenhouse gas emissions, later in this country profile.<br />Annual emissions can be largely influenced by
+          population size – we present the per capita figures above.
+        </p>
+      </div>
+    </div>
+    </section>
+  </body>
+</html>

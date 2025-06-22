@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="globals.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="scripts.js"></script>
+    <script src="//d3js.org/d3.v3.min.js"></script>
+  </head>
+  <body>
+   
+    <div class="home-page">
+      <div class="div">
+        <section id="section1" style="margin-top: 0vh;">
+        <div class="overlap">
+          <div class="rectangle"></div>
+          <img class="istockphoto" src="img/istockphoto-1254474165-612x612.jpg" />
+          <div class="navi-bar">
+            <div class="overlap-group">
+              <div><a href="#section1" class="text-wrapper">Home</a></div>
+              <div><a href="#section2"  class="text-wrapper-2">About Me</a></div>
+              <div><a href="#section3" class="text-wrapper-3">Calculate</a></div>
+            </div>
+          </div>
+          <p class="main-title">Carbon Footprint Calculator: Measure your Impact</p>
+          <div class="sub-title">Understand your impact.<br> Start your journey to sustainability.</div>
+        </div>
+        </section>
+        
+        <section id="section3" style="margin-top: 170vh;">
+        <div class="overlap-2">
+          <img class="image" src="img/Picture6.jpg" />
+          <div class="text-wrapper-4">Calculate</div>
+            
+          <!--number of people living in the house -->
+            <div id="step1" class="step active">
+              <h2>How many people live in your household?</h2>
+              <div class="input-group">
+                <input type="number" id="numPeople" min="1" placeholder="Enter number of people" required>
+                <div class="input-tip">This helps us calculate per-person emissions</div>
+              </div>
+              <button onclick="goToStep2()" class="next-button">Next <span class="arrow">→</span></button>
+            </div>
+            
+            <!--total electricity used by the user-->
+            <div id="step2" class="step electricity">
+              <h2>Your Electricity Usage</h2>
+              <div class="input-group">
+                <input type="number" id="elecConsume" placeholder="Monthly electricity consumption (kWh)" required>
+                <div class="input-tip">You can find this on your electricity bill</div>
+              </div>
+              <div class="input-group">
+                <input type="number" id="renewableConsume" value="0" placeholder="Renewable energy percentage">
+                <div class="input-tip">What percentage of your energy comes from renewable sources?</div>
+              </div>
+              <button onclick="goToStep3()" class="next-button">Next <span class="arrow">→</span></button>
+            </div> 
+            
+            <!-- here the typical diet is being collected-->
+            <div id="step3" class="step dropdown">
+            <h2>Your Diet Type</h2>
+            <div class="input-group">
+              <select id="dietDropdown" onchange="checkDiet()">
+                <option value="">Select your diet type</option>
+                <option value="vegetarian">Vegetarian</option>
+                <option value="non-veg">Non-vegetarian</option>
+                <option value="vegan">Vegan</option>
+              </select>
+              <div class="input-tip">Your diet significantly impacts your carbon footprint</div>
+            </div>
+
+            <div id="frequencyContainer" class="input-group" style="display: none;">
+              <select id="frequencySelect">
+                <option value="">How often do you consume non-vegetarian food?</option>
+                <option value="rarely">Rarely (1-2 times per week)</option>
+                <option value="often">Often (3-4 times per week)</option>
+                <option value="everyday">Everyday</option>
+              </select>
+            </div>
+            <button onclick="goToStep4()" class="next-button">Next <span class="arrow">→</span></button>
+          </div>
+            
+          <div id="step4" class="step distance">
+            <h2>Your Transportation</h2>
+            <div class="input-group">
+              <input type="number" id="drivingDist" placeholder="Monthly distance driven (km)" required>
+              <div class="input-tip">Include all personal vehicle travel</div>
+            </div>
+            <button onclick="CountCarbon()" class="next-button">Calculate</button>
+          </div>
+        </div>
+        </section>
+        
+        <section id="section2" style="margin-top: 100vh;">
+        <div class="overlap-4">
+          <div class="about-me-section">
+            <img class="image-2" src="img/Picture8.jpg" />
+            <div class="text-wrapper-6"><section id="about-section"><u>Carbon Footprint</u></section></div>
+            <p class="a-carbon-footprint">
+              A carbon footprint measures the total amount of greenhouse gases (GHGs) emitted by an individual,
+              organization, product, or activity. It&#39;s typically expressed in metric tons of carbon dioxide
+              equivalent (CO2e), which combines the global warming potential of multiple GHGs like CO2, methane, and
+              nitrous oxide. Essentially, it&#39;s a measure of how much your actions contribute to climate change.
+            </p>
+          </div>
+          <div><a href="readmore.html" class="text-wrapper-7">Read More</a></div>
+        </div>
+        </section>
+
+        <div class="overlap-5">
+          <div class="group">
+            <div class="home-about-us">Home<br />About Us<br />Calculate</div>
+            <div class="text-wrapper-8">Links</div>
+          </div>
+          <div class="group-2">
+            <img class="telegram-brands" src="img/telegram-brands-solid.svg" />
+            <img class="linkedin-brands" src="img/linkedin-brands-solid.svg" />
+            <div class="text-wrapper-9">Connect</div>
+            <img class="instagram-brands" src="img/instagram-brands-solid.svg" />
+            <img class="facebook-brands" src="img/facebook-brands-solid.svg" />
+          </div>
+          <div class="overlap-6">
+            <p class="p">Copyright 2025 All rights are reserved</p>
+            <img class="copyright-regular" src="img/copyright-regular.svg" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
