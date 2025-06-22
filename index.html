@@ -53,6 +53,7 @@
                 <input type="number" id="renewableConsume" value="0" placeholder="Renewable energy percentage">
                 <div class="input-tip">What percentage of your energy comes from renewable sources?</div>
               </div>
+              <button onclick="goToStep1()" class="back-button">← Back</button>
               <button onclick="goToStep3()" class="next-button">Next <span class="arrow">→</span></button>
             </div> 
             
@@ -77,6 +78,7 @@
                 <option value="everyday">Everyday</option>
               </select>
             </div>
+            <button onclick="goToStep2()" class="back-button">← Back</button>
             <button onclick="goToStep4()" class="next-button">Next <span class="arrow">→</span></button>
           </div>
             
@@ -86,6 +88,7 @@
               <input type="number" id="drivingDist" placeholder="Monthly distance driven (km)" required>
               <div class="input-tip">Include all personal vehicle travel</div>
             </div>
+            <button onclick="goToStep3()" class="back-button">← Back</button>
             <button onclick="CountCarbon()" class="next-button">Calculate</button>
           </div>
         </div>
